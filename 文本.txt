@@ -1,0 +1,3 @@
+framebuffer_size_callback 不work，一旦拖拽窗口改变其尺寸就会出错
+												需要初始化glad
+添加glad.c到源文件中是为了通过 gladLoadGLLoader
