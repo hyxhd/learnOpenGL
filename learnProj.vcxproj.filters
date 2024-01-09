@@ -1,85 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\data">
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="include\data">
       <UniqueIdentifier>{58df5465-a257-4dcf-8972-fae5c14d0555}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\shader">
-      <UniqueIdentifier>{8e33cff6-b04c-49b5-89b2-5d2cca6f5f2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\data\texture">
+    <Filter Include="include\data\texture">
       <UniqueIdentifier>{0fcc63bd-7883-4993-8da3-14a51b68bc82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include\data\shader">
+      <UniqueIdentifier>{c87f11f2-0994-460a-9f5b-f29c8899bb03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\opengl\glad\src\glad.c">
-      <Filter>源文件</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="YRWindow.cpp">
-      <Filter>源文件</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="YRShader.cpp">
-      <Filter>源文件</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="test_stb_image.cpp">
-      <Filter>源文件</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="YRCamera.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="文本.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="..\..\..\code\shader\fshader.txt">
-      <Filter>头文件\shader</Filter>
+    <Text Include="shader\fshader.txt">
+      <Filter>include\data\shader</Filter>
     </Text>
-    <Text Include="..\..\..\code\shader\vshader.txt">
-      <Filter>头文件\shader</Filter>
+    <Text Include="shader\vshader.txt">
+      <Filter>include\data\shader</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YRWindow.h">
-      <Filter>头文件</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="YRShader.h">
-      <Filter>头文件</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="YRPosData.h">
-      <Filter>头文件\data</Filter>
+      <Filter>include\data</Filter>
     </ClInclude>
     <ClInclude Include="YRTextureData.h">
-      <Filter>头文件\data</Filter>
+      <Filter>include\data</Filter>
     </ClInclude>
     <ClInclude Include="YRTexture.h">
-      <Filter>头文件</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="YRCameraData.h">
-      <Filter>头文件\data</Filter>
+      <Filter>include\data</Filter>
+    </ClInclude>
+    <ClInclude Include="YRCamera.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\code\texture\awesomeface.png">
-      <Filter>头文件\data\texture</Filter>
+      <Filter>include\data\texture</Filter>
     </Image>
     <Image Include="..\..\..\code\texture\container.jpg">
-      <Filter>头文件\data\texture</Filter>
+      <Filter>include\data\texture</Filter>
     </Image>
     <Image Include="..\..\..\code\texture\wall.jpg">
-      <Filter>头文件\data\texture</Filter>
+      <Filter>include\data\texture</Filter>
     </Image>
   </ItemGroup>
 </Project>

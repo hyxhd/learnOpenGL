@@ -145,15 +145,17 @@
     <ClCompile Include="..\..\..\..\opengl\glad\src\glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_stb_image.cpp" />
+    <ClCompile Include="YRCamera.cpp" />
     <ClCompile Include="YRShader.cpp" />
     <ClCompile Include="YRWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\code\shader\fshader.txt" />
-    <Text Include="..\..\..\code\shader\vshader.txt" />
+    <Text Include="shader\fshader.txt" />
+    <Text Include="shader\vshader.txt" />
     <Text Include="文本.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="YRCamera.h" />
     <ClInclude Include="YRCameraData.h" />
     <ClInclude Include="YRPosData.h" />
     <ClInclude Include="YRShader.h" />

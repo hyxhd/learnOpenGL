@@ -1,9 +1,11 @@
 #pragma once
-#include <glad/glad.h> 
+#include <glad/glad.h>
 #include <GLFW\glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "YRCamera.h"
 extern float colorAdjust;
 
 extern float leftRightAdjust;
@@ -18,17 +20,17 @@ extern float deltaTime;
 class YRWindow
 {
 public:
-	GLFWwindow* window;
+    GLFWwindow* window;
 
-	YRWindow(const char* windowName, const unsigned int width = 800, const unsigned int hight = 600);
+    YRWindow(const char* windowName, const unsigned int width = 800, const unsigned int hight = 600);
 
-	void processInput(GLFWwindow* window);
+    void processInput(GLFWwindow* window);
 
-	bool ifCloseWindow();
+    bool ifCloseWindow();
 
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+    static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
-	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 };
