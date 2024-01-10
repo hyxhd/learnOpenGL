@@ -168,6 +168,13 @@
     <Image Include="..\..\..\code\texture\container.jpg" />
     <Image Include="..\..\..\code\texture\wall.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="fshader.frag" />
+    <None Include="shader\fshader2.frag" />
+    <None Include="shader\fshaderLight.frag" />
+    <None Include="shader\vshader2.vert" />
+    <None Include="vshader.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -33,6 +33,8 @@ public:
 
     void setMat4(const std::string& name, glm::mat4& value) const;
 
+    void setVec3(const std::string& name, glm::vec3& value) const;
+
     /*
         create a vertex shader from vertex shader source.
     */

@@ -13,14 +13,22 @@ YRShader::YRShader(std::string& vertexShaderFilePath, std::string& fragmentShade
     {
         vShaderFile.open(vertexShaderFilePath);
         fShaderFile.open(fragmentShaderFilePath);
-        std::stringstream vShaderStream, fShaderStream;
-        vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();
+
+        std::string vshaderStr((std::istreambuf_iterator<char>(vShaderFile)),
+            std::istreambuf_iterator<char>());
+        std::string fshaderStr((std::istreambuf_iterator<char>(fShaderFile)),
+            std::istreambuf_iterator<char>());
+        //std::stringstream vShaderStream, fShaderStream;
+        //vShaderStream << vShaderFile.rdbuf();
+        //fShaderStream << fShaderFile.rdbuf();
         vShaderFile.close();
         fShaderFile.close();
 
-        vertexCode = vShaderStream.str();
-        fragmentCode = fShaderStream.str();
+        //vertexCode = vShaderStream.str();
+        //fragmentCode = fShaderStream.str();
+
+        vertexCode = vshaderStr;
+        fragmentCode = fshaderStr;
     }
     catch (std::ifstream::failure e)
     {
@@ -58,6 +66,11 @@ void YRShader::setFloat(const std::string& name, float value) const
 void YRShader::setMat4(const std::string& name, glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void YRShader::setVec3(const std::string& name, glm::vec3& value) const
+{
+    glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, glm::value_ptr(value));
 }
 
 unsigned int YRShader::createVertexShader(const char* vertexShaderSource)

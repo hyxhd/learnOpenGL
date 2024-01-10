@@ -88,4 +88,21 @@
       <Filter>include\data\texture</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vshader.vert">
+      <Filter>include\data\shader</Filter>
+    </None>
+    <None Include="fshader.frag">
+      <Filter>include\data\shader</Filter>
+    </None>
+    <None Include="shader\fshader2.frag">
+      <Filter>include\data\shader</Filter>
+    </None>
+    <None Include="shader\vshader2.vert">
+      <Filter>include\data\shader</Filter>
+    </None>
+    <None Include="shader\fshaderLight.frag">
+      <Filter>include\data\shader</Filter>
+    </None>
+  </ItemGroup>
 </Project>
