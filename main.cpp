@@ -32,7 +32,8 @@ float lastY = 600 / 2.0f;
 bool firstMouse = true;
 
 // lighting
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(0.0f, 1.0f, 1.0f);
+auto lightPosVec4 = glm::vec4(lightPos[0], lightPos[1], lightPos[2], 1.0f);
 
 int main()
 {
@@ -96,7 +97,7 @@ int main()
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices36), vertices36, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesNormal), verticesNormal, GL_STATIC_DRAW);
 
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -105,19 +106,33 @@ int main()
 	glGenVertexArrays(1, &cubeVAO);
 	glBindVertexArray(cubeVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0); 
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(1); 
+
+	unsigned int VBOTexture;
+	glGenBuffers(1, &VBOTexture);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOTexture);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices36), vertices36, GL_STATIC_DRAW);
+	glBindVertexArray(cubeVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOTexture);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	unsigned int lightVAO;
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	myshader.use();
+	//myshader.use();
 	//myshader.setInt("texture1", 0);
 	//myshader.setInt("texture2", 1);
+	//boxesShader.use();
+	//boxesShader.setInt("ourTexture", 0);
+	//boxesShader.setVec3("lightPos", lightPos);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -129,14 +144,35 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer
 
+		glm::mat4 projection = glm::perspective(glm::radians(myCamera.m_Fov), (float)800 / (float)600, 0.1f, 100.0f);
+		glm::mat4 view = myCamera.GetViewMatrix();
+		glm::mat4 model = glm::mat4(1.0f);
+		lightShader.use();
+		lightShader.setMat4("projection", projection);
+		lightShader.setMat4("view", view);
+		model = glm::mat4(1.0f);
+		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
+		//lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
+		//lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
+		//auto tempLightPosVec4 = model * lightPosVec4;
+		//lightPos = glm::vec3(tempLightPosVec4[0], tempLightPosVec4[1], tempLightPosVec4[2]);
+
+		model = glm::translate(model, lightPos);
+		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+		lightShader.setMat4("model", model);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, myTexture1.texture);
+		glBindTexture(GL_TEXTURE_2D, myTexture1.texture);
 		//glActiveTexture(GL_TEXTURE1);
 		//glBindTexture(GL_TEXTURE_2D, myTexture2.texture);
+
 
 		boxesShader.use();
 		auto objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
@@ -144,26 +180,20 @@ int main()
 		boxesShader.setVec3("objectColor", objectColor);
 		boxesShader.setVec3("lightColor", lightColor);
 
-		glm::mat4 projection = glm::perspective(glm::radians(myCamera.m_Fov), (float)800 / (float)600, 0.1f, 100.0f);
-		glm::mat4 view = myCamera.GetViewMatrix();
 		boxesShader.setMat4("projection", projection);
 		boxesShader.setMat4("view", view);
 
-		glm::mat4 model = glm::mat4(1.0f);
+		boxesShader.setVec3("viewPos", myCamera.m_Position);
+
+		auto tempLightPosVec4 = model * lightPosVec4;
+		auto k = glm::vec3(tempLightPosVec4[0], tempLightPosVec4[1], tempLightPosVec4[2]);
+		boxesShader.setVec3("lightPos", k);
+
+		 model = glm::mat4(1.0f);
+		//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
 		boxesShader.setMat4("model", model);
 
 		glBindVertexArray(cubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		lightShader.use();
-		lightShader.setMat4("projection", projection);
-		lightShader.setMat4("view", view);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-		lightShader.setMat4("model", model);
-
-		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		//myshader.use();
